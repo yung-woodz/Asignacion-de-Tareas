@@ -45,7 +45,7 @@ async function setupServer() {
 
     // Inicia el servidor en el puerto especificado
     app.listen(PORT, () => {
-      console.log(`=> Servidor corriendo en ${HOST}:${PORT}/api`);
+      console.log(`=> Servidor corriendo en http://${HOST}:${PORT}/api`);
     });
   } catch (err) {
     console.log('Error en server.js -> setupAPI(): ', err);

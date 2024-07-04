@@ -6,7 +6,7 @@ import { Router } from "express";
 import {getUser, getUsers, updateUser, deleteUser} from "../controllers/user.controller.js";
 
 /** Middlewares de autorización */
-import { isAdmin } from "../middlewares/auth.middleware.js";
+import { isAdmin,isDecano,isAyudante } from "../middlewares/auth.middleware.js";
 
 // Se realiza una instancia de express
 const router = Router();

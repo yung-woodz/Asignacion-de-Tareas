@@ -28,5 +28,35 @@ async function isAdmin(req, res, next) {
     return res.status(500).json({ message: 'Error interno del servidor' });
   }
 }
+// aca se realiza lo mismo que el admin ya que estos 2 tienen las mismas funciones que un admin
+/**
+ * Middleware para verificar si el usuario es ayudante
+ * @param {Object} req - Objeto de petición
+ * @param {Object} res - Objeto de respuesta
+ * @param {Function} next - Función para continuar con la siguiente función de middleware
+ */
+async function isAyudante(req, res, next) {
+  try {
+    // Verifica si hay un usuario autenticado en la sesión
+    if (!req.session.user) {
+      return res.status(401).json({ message: 'No estás autenticado' });
+    }
+    
+    // Obtiene el rol del usuario de la sesión
+    const userRole = req.session.user.rolName;
 
-export { isAdmin };
+    // Verifica si el usuario tiene el rol de ayudante
+    if (userRole === 'ayudante') {
+      // El usuario tiene el rol adecuado, continua con la siguiente función de middleware
+      next();
+    } else {
+      // El usuario no tiene el rol adecuado, devuelve un error de acceso denegado
+      return res.status(403).json({ message: 'No tienes permisos para acceder a este recurso' });
+    }
+  } catch (error) {
+    console.log("Error en auth.middleware.js -> isAyudante(): ", error);
+    return res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}
+
+export { isAdmin, isDecano, isAyudante  };
