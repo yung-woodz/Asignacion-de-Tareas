@@ -44,39 +44,76 @@ export async function getTasks (req, res) {
     const tasks = await Task.find();
 
     if (!tasks) {
-      return res.status(404).json({ error: "Tarea no encontrada" });
+      return res.status(404).json({ error: "Tareas no encontradas" });
+    }else{
+      res.status(200).json({
+        message: "Lista de tareas: ",
+        data: tasks
+      });
     }
 
-    res.status(200).json({
-      message: "Lista de tareas: ",
-      data: tasks
-    });
+    
 
 
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(404).json({ error: "No hay tareas tareas" });
   }
 };
 
-// Actualizar el estado de una tarea
+// Actualizar una tarea
 export async function updateTaskStatus (req, res) {
   
-
   try {
 
-    const { taskId, status, timeSpent } = req.body;
+    const taskId = req.query._id;
+    const { title, description, timeSpent } = req.body;
 
     const task = await Task.findById(taskId);
     if (!task) {
-      return res.status(404).json({ error: 'Task not found' });
+      return res.status(404).json({ error: 'Tarea no encontrada' });
     }
 
-    task.status = status;
-    if (timeSpent) task.timeSpent = timeSpent;
+    if (title !== undefined) task.title = title;
+    if (description !== undefined) task.description = description;
+    if (timeSpent !== undefined) task.timeSpent = timeSpent;
 
     await task.save();
-    res.json(task);
+    
+    res.status(200).json({
+      
+      message: "Tarea actualizada exitosamente!",
+      data: task
+
+    });
+
   } catch (error) {
+    console.log("Error en task.controller.js -> uptadateTask(): ", error);
     res.status(500).json({ error: error.message });
   }
 };
+
+// Eliminar una tarea
+export async function deleteTask(req, res) {
+  try {
+    const taskId= req.body;
+
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      return res.status(404).json({ error: 'Tarea no encontrada' });
+    }
+
+    await Task.findOneAndDelete(taskId);
+
+    res.status(200).json({
+      message: "Tarea eliminada exitosamente!",
+      data: task
+    });
+
+  } catch (error) {
+    console.log("Error en task.controller.js -> deleteTask(): ", error);
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
