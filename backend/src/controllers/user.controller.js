@@ -62,7 +62,7 @@ export async function updateUser(req, res) {
 
         // Verificar si el usuario tiene permisos para asignar roles
         const userRole = req.session.user.rolName;
-        if (userRole !== 'administrador' && userRole !== 'decano' && userRole !== 'ayudante') {
+        if (userRole !== 'administrador' && userRole !== 'decano'  && userRole !== 'ayudante') {
             return res.status(403).json({
                 message: 'No tienes permisos para asignar roles a usuarios',
                 data: null

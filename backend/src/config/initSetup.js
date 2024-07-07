@@ -13,13 +13,19 @@ import User from "../models/user.model.js";
 export async function createRoles() {
   try {
     // Busca todos los roles en la base de datos
-    const count = await Role.estimatedDocumentCount();
+    const count = await Role.countDocuments();
     // Si no hay roles en la base de datos los crea
     if (count > 0) return;
 
     await Promise.all([
       new Role({ name: "usuario" }).save(),
       new Role({ name: "administrador" }).save(),
+      new Role({ name: "decano" }).save(),
+      new Role({ name: "ayudante" }).save(),
+      new Role({ name: "jefe de carrera" }).save(),
+      new Role({ name: "secretaria" }).save(),
+      new Role({ name: "técnico" }).save(),
+      new Role({ name: "docente" }).save(),
     ]);
     console.log("* => Roles creados exitosamente");
   } catch (error) {
