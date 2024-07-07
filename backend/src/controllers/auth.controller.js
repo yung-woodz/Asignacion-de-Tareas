@@ -82,8 +82,7 @@ export async function register(req, res) {
             email: userData.email,
             rut: userData.rut,
             password: await User.encryptPassword(userData.password),
-            funcion: userData.funcion,
-            departamento: usaerData.departamento,
+            facultad: userData.facultad,
             roles: [userRole._id]
         });
         await newUser.save();
