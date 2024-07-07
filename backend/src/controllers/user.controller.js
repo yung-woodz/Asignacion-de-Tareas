@@ -60,9 +60,25 @@ export async function updateUser(req, res) {
             return;
         }
 
+        // Verificar si el usuario tiene permisos para asignar roles
+        const userRole = req.session.user.rolName;
+        if (userRole !== 'administrador' && userRole !== 'decano'  && userRole !== 'ayudante') {
+            return res.status(403).json({
+                message: 'No tienes permisos para asignar roles a usuarios',
+                data: null
+            });
+        }
+
+
+
+    // se cambia esta parte para realizar el requerimiento
         if (updatedData.roles) {
             const rolesNames = updatedData.roles;
+            // busca los reoles en la BD por el nombre
+            
             const roles = await Role.find({ name: { $in: rolesNames } });
+            // Verifica si todos los roles proporcionados son válidos
+
 
             if (roles.length !== rolesNames.length) {
                 res.status(400).json({
@@ -71,7 +87,7 @@ export async function updateUser(req, res) {
                 });
                 return;
             }
-
+                // Obtiene los IDs de los roles válidos y los asigna a updatedData.roles
             const rolesIds = roles.map(role => role._id);
             updatedData.roles = rolesIds;
         }

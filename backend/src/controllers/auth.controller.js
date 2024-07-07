@@ -57,9 +57,22 @@ export async function register(req, res) {
         if (existingUser) {
             return res.status(400).json({ message: "El correo electrónico ya está registrado." });
         }
-
-
-        const userRole = await Role.findOne({ name: 'usuario' });
+        // cambiamos esta parte para la obtener el rol especifico para el requisito 3
+        let roleName;
+        switch (userData.role) {
+            case 'decano':
+            case 'ayudante':
+            case 'jefe de carrera':
+            case 'secretaria':
+            case 'técnico':
+            case 'docente':
+                roleName = userData.role;
+                break;
+            default:
+                roleName = 'usuario'; // Rol por defecto si no se especifica uno válido
+                break;
+        }
+        const userRole = await Role.findOne({ name: roleName });
         if (!userRole) {
             return res.status(500).json({ message: "Error al asignar el rol de usuario." });
         }
