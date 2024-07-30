@@ -7,6 +7,8 @@ import Error404 from './pages/Error404';
 import EditUser from './pages/EditUser';
 import ProtectedRoute from './components/ProtectedRoute';
 import Users from './pages/Users';
+import TaskAd from './pages/TaskAd';
+import GetTask  from './pages/GetTask';
 
 const AppRouter = () => {
   return (
@@ -28,6 +30,22 @@ const AppRouter = () => {
         element={
           <ProtectedRoute allowedRoles={['administrador']}>
             <Users />
+          </ProtectedRoute>
+        } 
+      />
+       <Route 
+        path="/tasks" 
+        element={
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <TaskAd />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/GetTask" 
+        element={
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <GetTask />
           </ProtectedRoute>
         } 
       />
