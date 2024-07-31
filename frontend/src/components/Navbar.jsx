@@ -29,9 +29,19 @@ const Navbar = () => {
                 <li className={location.pathname === "/inicio" ? "active" : ""}>
                     <NavLink to="/home">Inicio</NavLink>
                 </li>
-                {userRole === 'administrador' && (
+                {(userRole === 'administrador' || userRole === 'decano' || userRole === 'ayudante') && (
                     <li className={location.pathname === "/usuarios" ? "active" : ""}>
                         <NavLink to="/users">Usuarios</NavLink>
+                    </li>
+                )}
+                {(userRole === 'administrador' || userRole === 'decano' || userRole === 'ayudante') && (
+                    <li className={location.pathname === "/crear-tarea" ? "active" : ""}>
+                        <NavLink to="/works/task">Crear Tareas</NavLink>
+                    </li>
+                )}
+                {(userRole === 'administrador' || userRole === 'decano' || userRole === 'ayudante') && (
+                    <li className={location.pathname === "/tareas" ? "active" : ""}>
+                        <NavLink to="/works/tasks">Tareas</NavLink>
                     </li>
                 )}
                 <li className={location.pathname === "/perfil" ? "active" : ""}>
