@@ -29,9 +29,9 @@ export async function updateTask(data, _id) {
     }
 }
 
-export async function deleteTask(data) {
+export async function deleteTask(_id) {
     try {
-        const response = await axios.delete(`/works/tasks/status/eliminar`, data);
+        const response = await axios.delete('/works/tasks/status/eliminar', { data: { _id } });
         return response.data;
     } catch (error) {
         throw error.response?.data || error.message;

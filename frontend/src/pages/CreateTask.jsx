@@ -17,8 +17,6 @@ const CreateTask = () => {
 
 		if(data) alert('Tarea Creada!');
 			else alert('no');
-
-
         
     }
 

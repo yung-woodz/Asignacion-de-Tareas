@@ -9,6 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Users from './pages/Users';
 import CreateTask from './pages/CreateTask';
 import Tasks from './pages/Tasks';
+import EditTask from './pages/EditTask';
 
 const AppRouter = () => {
   return (
@@ -65,14 +66,14 @@ const AppRouter = () => {
           </ProtectedRoute>
         } 
       />
-      {/* <Route 
+      <Route 
         path="/edit-task/:_id" 
         element={
           <ProtectedRoute allowedRoles={['administrador', 'decano', 'ayudante']}>
-            <EditTasks />
+            <EditTask />
           </ProtectedRoute>
         } 
-      /> */}
+      />
       <Route path="*" element={<Error404 />} />
     </Routes>
   );
