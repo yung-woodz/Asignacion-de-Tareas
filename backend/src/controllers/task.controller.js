@@ -61,13 +61,12 @@ export async function getTasks (req, res) {
 
 // Actualizar una tarea
 export async function updateTaskStatus (req, res) {
-  
-  try {
 
-    const taskId = req.query._id;
+  try {
+    const taskId = req.params.id;
     const { title, description, timeSpent } = req.body;
 
-    const task = await Task.findById(taskId);
+    const task = await Task.findOne({assignedTo:taskId});
     if (!task) {
       return res.status(404).json({ error: 'Tarea no encontrada' });
     }
@@ -94,15 +93,15 @@ export async function updateTaskStatus (req, res) {
 // Eliminar una tarea
 export async function deleteTask(req, res) {
   try {
-    const taskId= req.body;
+    const taskId= req.params.id;
 
-    const task = await Task.findById(taskId);
-
+    const task = await Task.findOne({assignedTo:taskId});
+    console.log("waaa",task);
     if (!task) {
       return res.status(404).json({ error: 'Tarea no encontrada' });
     }
 
-    await Task.findOneAndDelete(taskId);
+    await Task.findOneAndDelete({assignedTo:taskId});
 
     res.status(200).json({
       message: "Tarea eliminada exitosamente!",

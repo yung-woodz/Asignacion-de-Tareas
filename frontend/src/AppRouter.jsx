@@ -9,7 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Users from './pages/Users';
 import TaskAd from './pages/TaskAd';
 import GetTask  from './pages/GetTask';
-
+import EditTask from './pages/EditTask';
 const AppRouter = () => {
   return (
     <Routes>
@@ -46,6 +46,14 @@ const AppRouter = () => {
         element={
           <ProtectedRoute allowedRoles={['administrador']}>
             <GetTask />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/edit-task/:taskId" 
+        element={
+          <ProtectedRoute>
+            <EditTask />
           </ProtectedRoute>
         } 
       />

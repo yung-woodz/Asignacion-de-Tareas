@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import Table from '../components/Table';
-import { getTasks, deleteTask, updateTask } from '../services/task.service';
+import TableTask from '../components/TableTask';
 import searchIcon from '../assets/searchIcon.svg';
+import { getTasks, deleteTask } from '../services/task.service.js';
 
 const GetTask = () => {
   const [tasks, setTasks] = useState([]);
@@ -16,9 +16,10 @@ const GetTask = () => {
     try {
       const response = await getTasks();
       const formattedData = response.data.map(task => ({
+        id: task._id,
         Título: task.title,
         Descripción: task.description,
-        Asignado: task.assignedTo, // Puedes necesitar mapear este valor a un nombre de usuario si tienes esa información
+        Asignado: task.assignedTo, 
         Tiempo: task.timeSpent,
         Estado: task.status
       }));
@@ -28,20 +29,7 @@ const GetTask = () => {
     }
   };
 
-  const handleDelete = async (taskId) => {
-    try {
-      await deleteTask({ taskId });
-      setTasks(tasks.filter(task => task._id !== taskId));
-    } catch (error) {
-      console.error("Error: ", error);
-    }
-  };
-
-  const handleEdit = (taskId) => {
-    const task = tasks.find(t => t._id === taskId);
-    navigate(`/edit-task/${taskId}`, { state: { task } });
-  };
-
+  
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -59,7 +47,7 @@ const GetTask = () => {
       <Navbar />
       <div className='main-container'>
         <div className='table-container'>
-           <div className='search-container'>
+          <div className='search-container'>
             <div className='search-input-wrapper'>
               <img src={searchIcon} alt="Buscar" className='search-icon' />
               <input
@@ -71,7 +59,7 @@ const GetTask = () => {
               />
             </div>
           </div> 
-          <Table columns={columns} data={tasks} /*onDelete={handleDelete} onEdit={handleEdit} *//>
+          <TableTask columns={columns} data={tasks} />
         </div>
       </div>
     </>

@@ -12,6 +12,7 @@ export async function createTask(data) {
   export async function getTasks() {
     try {
       const response = await axios.get('/works/tasks');
+      console.log("este es el get",response);
       return response.data;
     } catch (error) {
       throw new Error('No se han encontrado las Tareas');
@@ -20,18 +21,20 @@ export async function createTask(data) {
   //mostrar el update
   export async function updateTask(data, _id) {
     try {
-      const response = await axios.patch('/works/tasks/status?_id=${_id}', data);
+      const response = await axios.patch(`/works/tasks/status/${_id}`, data);
       return response.data;
     } catch (error) {
       throw new Error('Error al Actualizar tarea');
     }
   }
-// eliminar o cancelar
-  export async function deleteTask(data) {
+  
+  export async function deleteTask(_id) {
     try {
-        const response = await axios.delete('/works/tasks/status/eliminar', data);
-        return response.data;
+      console.log("hola",_id);
+      await axios.delete(`/works/tasks/status/eliminar/${_id}`);
+
     } catch (error) {
         throw error.response?.data || error.message;
     }
 }
+  
