@@ -1,24 +1,26 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Table from '../components/Table';
-import { getTasks, deleteTask } from '../services/Task.service';
+import { getTasks, deleteTask, updateTask } from '../services/task.service';
+import searchIcon from '../assets/searchIcon.svg';
 
-
-const Tasks = () => {
+const GetTask = () => {
   const [tasks, setTasks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
-  const columns = ['Título', 'Descripción', 'Asignado a', 'Tiempo dedicado (min)', 'Status', 'Acción'];
+  const columns = ['Título', 'Descripción', 'Asignado', 'Tiempo', 'Estado', 'Acción'];
 
-  const dataTask = async () => {
+  const fetchData = async () => {
     try {
       const response = await getTasks();
       const formattedData = response.data.map(task => ({
         Título: task.title,
         Descripción: task.description,
-        'Asignado a': task.assignedTo,
-        'Tiempo dedicado (min)': task.timeSpent,
-        Status: task.status
+        Asignado: task.assignedTo, // Puedes necesitar mapear este valor a un nombre de usuario si tienes esa información
+        Tiempo: task.timeSpent,
+        Estado: task.status
       }));
       setTasks(formattedData);
     } catch (error) {
@@ -45,7 +47,7 @@ const Tasks = () => {
   };
 
   useEffect(() => {
-    dataTask();
+    fetchData();
   }, []);
 
   const filteredTasks = tasks.filter(task =>
@@ -57,7 +59,7 @@ const Tasks = () => {
       <Navbar />
       <div className='main-container'>
         <div className='table-container'>
-          <div className='search-container'>
+           <div className='search-container'>
             <div className='search-input-wrapper'>
               <img src={searchIcon} alt="Buscar" className='search-icon' />
               <input
@@ -68,12 +70,12 @@ const Tasks = () => {
                 className='search-input'
               />
             </div>
-          </div>
-          <Table columns={columns} data={filteredTasks} onDelete={handleDelete} onEdit={handleEdit} />
+          </div> 
+          <Table columns={columns} data={tasks} /*onDelete={handleDelete} onEdit={handleEdit} *//>
         </div>
       </div>
     </>
   );
 };
 
-export default Tasks;
+export default GetTask;

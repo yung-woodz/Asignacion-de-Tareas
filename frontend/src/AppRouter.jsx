@@ -33,7 +33,7 @@ const AppRouter = () => {
           </ProtectedRoute>
         } 
       />
-       <Route 
+      <Route 
         path="/tasks" 
         element={
           <ProtectedRoute allowedRoles={['administrador']}>

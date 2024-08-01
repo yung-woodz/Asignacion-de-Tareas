@@ -11,7 +11,7 @@ export async function createTask(data) {
 // mostrar las tareas
   export async function getTasks() {
     try {
-      const response = await instance.get('/works/tasks');
+      const response = await axios.get('/works/tasks');
       return response.data;
     } catch (error) {
       throw new Error('No se han encontrado las Tareas');

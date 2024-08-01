@@ -35,7 +35,7 @@ const Navbar = () => {
                     </li>
                 )}
                 {userRole === 'administrador' && (
-                    <li className={location.pathname === "/GetTask" ? "active" : ""}>
+                    <li className={location.pathname === "/tareas" ? "active" : ""}>
                         <NavLink to="/GetTask">Tareas</NavLink>
                     </li>
                 )}
