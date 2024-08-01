@@ -38,6 +38,12 @@ const Register = () => {
                         type: "text",
                     },
 					{
+						label: "Facultad",
+                        name: "facultad",
+                        placeholder: "ubb",
+                        type: "text",
+                    },
+					{
 						label: "Contraseña",
 						name: "password",
 						placeholder: "*********",

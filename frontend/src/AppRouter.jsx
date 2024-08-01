@@ -7,6 +7,9 @@ import Error404 from './pages/Error404';
 import EditUser from './pages/EditUser';
 import ProtectedRoute from './components/ProtectedRoute';
 import Users from './pages/Users';
+import CreateTask from './pages/CreateTask';
+import Tasks from './pages/Tasks';
+import EditTask from './pages/EditTask';
 
 const AppRouter = () => {
   return (
@@ -26,7 +29,7 @@ const AppRouter = () => {
       <Route 
         path="/users" 
         element={
-          <ProtectedRoute allowedRoles={['administrador']}>
+          <ProtectedRoute allowedRoles={['administrador', 'decano', 'ayudante']}>
             <Users />
           </ProtectedRoute>
         } 
@@ -42,12 +45,35 @@ const AppRouter = () => {
       <Route 
         path="/edit-user/:rut" 
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['administrador', 'decano', 'ayudante']}>
             <EditUser />
           </ProtectedRoute>
         } 
       />
-      
+      <Route 
+        path="/works/task" 
+        element={
+          <ProtectedRoute allowedRoles={['administrador', 'decano', 'ayudante']}>
+            <CreateTask />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/works/tasks" 
+        element={
+          <ProtectedRoute allowedRoles={['administrador', 'decano', 'ayudante']}>
+            <Tasks />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/edit-task/:_id" 
+        element={
+          <ProtectedRoute allowedRoles={['administrador', 'decano', 'ayudante']}>
+            <EditTask />
+          </ProtectedRoute>
+        } 
+      />
       <Route path="*" element={<Error404 />} />
     </Routes>
   );
