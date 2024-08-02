@@ -4,18 +4,12 @@ import '../styles/styles.css';
 import { deleteTask } from '../services/task.service';
 import {useNavigate} from 'react-router-dom';
 
-const TableTask = ({ columns, data, onEdit }) => {
+const TableTask = ({ columns, data, onDelete, onEdit }) => {
   const totalRows = 7;
   const numEmptyRows = totalRows - (data.length > 0 ? data.length : 1);
   const navigate = useNavigate();
-  const handleDelete = async (taskId) => {
-    try {
-      console.log("este es la id del task",taskId);
-      await deleteTask(taskId);
-    } catch (error) {
-      console.error("Error: ", error);
-    }
-  };
+  
+  
 
   const handleEdit = (taskId) => {
     navigate(`/edit-task/${taskId}`);
@@ -48,13 +42,13 @@ const TableTask = ({ columns, data, onEdit }) => {
                         src={updateIcon} 
                         alt="Editar" 
                         style={{ marginRight: '10px', cursor: 'pointer', width: '24px', height: '24px' }}
-                        onClick={() => handleEdit(row.Asignado)}
+                        onClick={() => handleEdit(row._id)}
                       />
                       <img 
                         src={deleteIcon} 
                         alt="Eliminar" 
                         style={{ cursor: 'pointer', width: '24px', height: '24px' }} 
-                        onClick={() => handleDelete(row.Asignado)} 
+                        onClick={() => onDelete(row._id)} 
                       />
                     </>
                   ) : (

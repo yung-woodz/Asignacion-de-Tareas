@@ -9,14 +9,14 @@ const GetTask = () => {
   const [tasks, setTasks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-
+  
   const columns = ['Título', 'Descripción', 'Asignado', 'Tiempo', 'Estado', 'Acción'];
 
   const fetchData = async () => {
     try {
       const response = await getTasks();
       const formattedData = response.data.map(task => ({
-        id: task._id,
+        _id: task._id,
         Título: task.title,
         Descripción: task.description,
         Asignado: task.assignedTo, 
@@ -29,7 +29,21 @@ const GetTask = () => {
     }
   };
 
-  
+  const handleDelete = async (_id) => {
+    try {
+      console.log("este es la id del task",_id);
+      await deleteTask(_id);
+      setTasks(tasks.filter(task => task._id !== _id));
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+  };
+
+  const handleEdit = (_id) => {
+    const task = tasks.find(t => t._id === _id);
+    navigate(`/edit-task/${_id}`, { state: { task } });
+  };
+   
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -39,7 +53,7 @@ const GetTask = () => {
   }, []);
 
   const filteredTasks = tasks.filter(task =>
-    task.Título.toLowerCase().includes(searchTerm.toLowerCase())
+    task.Asignado.includes(searchTerm)
   );
 
   return (
@@ -59,7 +73,7 @@ const GetTask = () => {
               />
             </div>
           </div> 
-          <TableTask columns={columns} data={tasks} />
+          <TableTask columns={columns} data={filteredTasks} onDelete={handleDelete} onEdit={handleEdit} />
         </div>
       </div>
     </>

@@ -21,7 +21,7 @@ export async function createTask(data) {
   //mostrar el update
   export async function updateTask(data, _id) {
     try {
-      const response = await axios.patch(`/works/tasks/status/${_id}`, data);
+      const response = await axios.patch(`/works/tasks/status?_id=${_id}`, data);
       return response.data;
     } catch (error) {
       throw new Error('Error al Actualizar tarea');
@@ -31,8 +31,8 @@ export async function createTask(data) {
   export async function deleteTask(_id) {
     try {
       console.log("hola",_id);
-      await axios.delete(`/works/tasks/status/eliminar/${_id}`);
-
+      const response = await axios.delete('/works/tasks/status/eliminar', { data: { _id } });
+      return response.data;
     } catch (error) {
         throw error.response?.data || error.message;
     }

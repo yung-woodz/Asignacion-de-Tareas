@@ -11,8 +11,8 @@ router.use(authorizeRoles(isAdmin,isAyudante,isDecano))
 
 router.post('/task', createTask);
 router.get('/tasks', getTasks);
-router.patch('/tasks/status/:id', updateTaskStatus);
-router.delete('/tasks/status/eliminar/:id', deleteTask);
+router.patch('/tasks/status', updateTaskStatus);
+router.delete('/tasks/status/eliminar', deleteTask);
 
 
 export default router;
