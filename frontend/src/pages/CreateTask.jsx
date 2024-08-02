@@ -14,9 +14,6 @@ const CreateTask = () => {
 		createTask(data).then(() => {
 			navigate('/users');
 		})
-
-		if(data) alert('Tarea Creada!');
-			else alert('no');
         
     }
 
