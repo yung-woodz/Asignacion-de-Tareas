@@ -40,10 +40,7 @@ const Tasks = () => {
     try {
       await deleteTask(_id);
       setTasks(tasks.filter(task => task._id !== _id));
-<<<<<<< HEAD
-=======
       console.log(tasks);
->>>>>>> 48db122c02823daa93588afc0fcfdcd0a7489026
     } catch (error) {
       console.error("Error: ", error);
     }

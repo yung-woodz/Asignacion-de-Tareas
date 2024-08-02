@@ -153,10 +153,7 @@ body {
 		margin-bottom: 0.5vh;
 	}
 	input {
-<<<<<<< HEAD
 		resize: vertical;
-=======
->>>>>>> 48db122c02823daa93588afc0fcfdcd0a7489026
 		display: flex;
 		border: 3px solid #003366;
 		border-radius: 12px;
